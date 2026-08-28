@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECommerce-Storefront</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>ECommerce-Storefront</h1>
+        <div>
+            <input type="text" id="searchInput">
+        </div>
+        <button class="cart">Cart
+            <span class="count">0</span>
+        </button>
+    </header>
+
+    <section class="filters">
+        <nav>
+            <button data-category ="all">All</button> <button  data-category="electronis">Electronics</button> <button data-category="apparel">Apparel</button> <button data-category="accessories">Accessories</button>
+        </nav>
+    </section>
+
+    <main id="productGrid">
+
+    </main>
+
+    <aside id="cartDrawer">
+        <header>
+            <h2>cart</h2>
+            <button class="close">close</button>
+        </header>
+
+        <div class="item-list"></div>
+
+        <summary></summary>
+    </aside>
+
+    <script src="app.js"></script>
+</body>
+</html>
