@@ -40,6 +40,6 @@ header{
     z-index: 1000;
 }
 
-#cartDrawer .open{
+#cartDrawer.open{
     transform: translateX(0);
 }
