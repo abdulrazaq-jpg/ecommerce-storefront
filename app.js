@@ -1,52 +1,52 @@
 const products = [
-  {
-    id: 1,
-    name: "Wireless Headphones",
-    price: 99.99,
-    category: "Electronics",
-    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500",
-    inStock: true
-  },
-  {
-    id: 2,
-    name: "Mechanical Keyboard",
-    price: 149.99,
-    category: "Electronics",
-    image: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=500",
-    inStock: true
-  },
-  {
-    id: 3,
-    name: "Cotton Hoodie",
-    price: 49.99,
-    category: "Apparel",
-    image: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=500",
-    inStock: true
-  },
-  {
-    id: 4,
-    name: "Denim Jacket",
-    price: 79.99,
-    category: "Apparel",
-    image: "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=500",
-    inStock: false
-  },
-  {
-    id: 5,
-    name: "Leather Wallet",
-    price: 29.99,
-    category: "Accessories",
-    image: "https://images.unsplash.com/photo-1627123424574-724758594e93?w=500",
-    inStock: true
-  },
-  {
-    id: 6,
-    name: "Canvas Backpack",
-    price: 59.99,
-    category: "Accessories",
-    image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500",
-    inStock: true
-  }
+    {
+        id: 1,
+        name: "Wireless Headphones",
+        price: 99.99,
+        category: "Electronics",
+        image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500",
+        inStock: true
+    },
+    {
+        id: 2,
+        name: "Mechanical Keyboard",
+        price: 149.99,
+        category: "Electronics",
+        image: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=500",
+        inStock: true
+    },
+    {
+        id: 3,
+        name: "Cotton Hoodie",
+        price: 49.99,
+        category: "Apparel",
+        image: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=500",
+        inStock: true
+    },
+    {
+        id: 4,
+        name: "Denim Jacket",
+        price: 79.99,
+        category: "Apparel",
+        image: "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=500",
+        inStock: false
+    },
+    {
+        id: 5,
+        name: "Leather Wallet",
+        price: 29.99,
+        category: "Accessories",
+        image: "https://images.unsplash.com/photo-1627123424574-724758594e93?w=500",
+        inStock: true
+    },
+    {
+        id: 6,
+        name: "Canvas Backpack",
+        price: 59.99,
+        category: "Accessories",
+        image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500",
+        inStock: true
+    }
 ];
 
 const main = document.getElementById("productGrid");
@@ -70,11 +70,11 @@ function add_products(products) {
 
 add_products(products);
 
-function open_cartDrawer(){
+function open_cartDrawer() {
     const cartDrawer = document.getElementById("cartDrawer");
     const opencart = document.getElementById("opencart");
     const closecart = document.getElementById("closecart");
-    
+
     opencart.addEventListener("click", () => {
         cartDrawer.classList.add("open");
     });
@@ -92,28 +92,41 @@ const cart_content = document.getElementById("cart-list");
 cart_content.innerHTML = "";
 
 let cnt = 0;
+const cart_Arr = [];
 
-function add_to_cart(){
-    main.addEventListener("click", (event)=>{
-        if(event.target.classList.contains("add_to_cart_button")){
+function add_to_cart() {
+    main.addEventListener("click", (event) => {
+        if (event.target.classList.contains("add_to_cart_button")) {
             const product_id = Number(event.target.dataset.id);
-            const selected_product = products.find(p=>p.id === product_id);
+            const selected_product = products.find(p => p.id === product_id);
 
-            if(selected_product)
-            {
-                cnt ++;
-                cart_content.innerHTML += `
-                <div class = "product_card">
-                    <img src="${selected_product.image}" alt="${selected_product.name}">
-                    <p>${selected_product.name}</p>
-                    <p>${selected_product.category}</p>
-                    <p>${selected_product.price.toFixed(2)}</p>
-                </div>
-                `
-                document.getElementById("count").innerHTML = cnt;
+            if (selected_product) {
+                if (cart_Arr.includes(product_id)) {
+                    alert("Item Present In Cart");
+                }
+                else {
+                    update_cart(product_id, selected_product);
+                }
             }
         };
     })
+}
+
+function update_cart(product_id, selected_product) {
+    cnt++;
+    cart_content.innerHTML += `
+    <div class = "product_card">
+    <img src="${selected_product.image}" alt="${selected_product.name}">
+    <p>${selected_product.name}</p>
+    <p>${selected_product.category}</p>
+    <p>${selected_product.price.toFixed(2)}</p>
+    </div>
+    `
+    document.getElementById("count").innerHTML = cnt;
+
+    cart_Arr.push(product_id);
+
+    alert("Added to Cart");
 }
 
 add_to_cart();
