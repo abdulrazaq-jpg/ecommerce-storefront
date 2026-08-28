@@ -86,3 +86,34 @@ function open_cartDrawer(){
 }
 
 open_cartDrawer();
+
+const cart_content = document.getElementById("cart-list");
+
+cart_content.innerHTML = "";
+
+let cnt = 0;
+
+function add_to_cart(){
+    main.addEventListener("click", (event)=>{
+        if(event.target.classList.contains("add_to_cart_button")){
+            const product_id = Number(event.target.dataset.id);
+            const selected_product = products.find(p=>p.id === product_id);
+
+            if(selected_product)
+            {
+                cnt ++;
+                cart_content.innerHTML += `
+                <div class = "product_card">
+                    <img src="${selected_product.image}" alt="${selected_product.name}">
+                    <p>${selected_product.name}</p>
+                    <p>${selected_product.category}</p>
+                    <p>${selected_product.price.toFixed(2)}</p>
+                </div>
+                `
+                document.getElementById("count").innerHTML = cnt;
+            }
+        };
+    })
+}
+
+add_to_cart();
