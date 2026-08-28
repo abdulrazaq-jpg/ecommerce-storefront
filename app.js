@@ -51,18 +51,16 @@ const products = [
 
 const main = document.getElementById("productGrid");
 
-
-
 function add_products(products) {
-    cardsHTML = "";
+    let cardsHTML = "";
     products.forEach(product => {
         cardsHTML += `
         <div class = "product_card">
-        <img src="${product.image}" alt="${product.name}">
-        <p>${product.name}</p>
-        <p>${product.category}</p>
-        <p>${product.price.toFixed(2)}</p>
-        <button class = "add_to_cart_button" data-id = "${product.id}" ${!product.inStock ? 'disabled' : ''}>${!product.inStock ? 'Out Of Stock' : 'Add to Cart'}</button>
+         <img src="${product.image}" alt="${product.name}">
+         <p>${product.name}</p>
+         <p>${product.category}</p>
+         <p>${product.price.toFixed(2)}</p>
+         <button class = "add_to_cart_button" data-id = "${product.id}" ${!product.inStock ? 'disabled' : ''}>${!product.inStock ? 'Out Of Stock' : 'Add to Cart'}</button>
         </div>
         `
     });
@@ -71,3 +69,20 @@ function add_products(products) {
 }
 
 add_products(products);
+
+function open_cartDrawer(){
+    const cartDrawer = document.getElementById("cartDrawer");
+    const opencart = document.getElementById("opencart");
+    const closecart = document.getElementById("closecart");
+    
+    opencart.addEventListener("click", () => {
+        cartDrawer.classList.add("open");
+    });
+
+    closecart.addEventListener("click", () => {
+        cartDrawer.classList.remove("open");
+    });
+
+}
+
+open_cartDrawer();
