@@ -54,19 +54,20 @@ const main = document.getElementById("productGrid");
 
 
 function add_products(products) {
+    cardsHTML = "";
     products.forEach(product => {
-        main.innerHTML = "";
-
-        main.innerHTML += `
+        cardsHTML += `
         <div class = "product_card">
-            <img src="${product.image}" alt="${product.name}">
-            <p>${product.name}</p>
-            <p>${product.category}</p>
-            <p>${product.price.toFixed(2)}</p>
-            <button class = "add_to_cart_button" data-id = "${product.id}" ${!product.inStock ? 'disabled' : ''}>${!product.inStock ? 'Out Of Stock' : 'Add to Cart'}</button>
+        <img src="${product.image}" alt="${product.name}">
+        <p>${product.name}</p>
+        <p>${product.category}</p>
+        <p>${product.price.toFixed(2)}</p>
+        <button class = "add_to_cart_button" data-id = "${product.id}" ${!product.inStock ? 'disabled' : ''}>${!product.inStock ? 'Out Of Stock' : 'Add to Cart'}</button>
         </div>
         `
     });
+
+    main.innerHTML = cardsHTML;
 }
 
 add_products(products);
