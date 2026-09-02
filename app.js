@@ -59,7 +59,7 @@ function add_products(products) {
          <img src="${product.image}" alt="${product.name}">
          <p>${product.name}</p>
          <p>${product.category}</p>
-         <p>${product.price.toFixed(2)}</p>
+         <p>$${product.price.toFixed(2)}</p>
          <button class = "add_to_cart_button" data-id = "${product.id}" ${!product.inStock ? 'disabled' : ''}>${!product.inStock ? 'Out Of Stock' : 'Add to Cart'}</button>
         </div>
         `
@@ -89,8 +89,6 @@ open_cartDrawer();
 
 const cart_content = document.getElementById("cart-list");
 
-cart_content.innerHTML = "";
-
 let cnt = 0;
 const cart_Arr = [];
 
@@ -99,9 +97,9 @@ function add_to_cart() {
         if (event.target.classList.contains("add_to_cart_button")) {
             const product_id = Number(event.target.dataset.id);
             const selected_product = products.find(p => p.id === product_id);
-
+            
             if (selected_product) {
-                if (cart_Arr.includes(product_id)) {
+                if (cart_Arr.some(p => p.id === product_id)) {
                     alert("Item Present In Cart");
                 }
                 else {
@@ -116,17 +114,65 @@ function update_cart(product_id, selected_product) {
     cnt++;
     cart_content.innerHTML += `
     <div class = "product_card">
-    <img src="${selected_product.image}" alt="${selected_product.name}">
-    <p>${selected_product.name}</p>
-    <p>${selected_product.category}</p>
-    <p>${selected_product.price.toFixed(2)}</p>
+        <img src="${selected_product.image}" alt="${selected_product.name}">
+        <p>${selected_product.name}</p>
+        <p>${selected_product.category}</p>
+        <p>$${selected_product.price.toFixed(2)}</p>
+        <button class = "cart_btn" data-id="${product_id}">
+            Remove
+        </button>
     </div>
     `
     document.getElementById("count").innerHTML = cnt;
 
-    cart_Arr.push(product_id);
+    cart_Arr.push(selected_product);
 
     alert("Added to Cart");
 }
 
-add_to_cart();
+add_to_cart()
+
+const element = document.getElementById("cartDrawer");
+
+function remove_from_cart() {
+    element.addEventListener("click", (e) => {
+        if (e.target.classList.contains("cart_btn")) {
+            const p_id = Number(e.target.dataset.id);
+
+            let index = cart_Arr.findIndex(p=> p.id === p_id);
+
+            if (index !== -1) {
+                cart_Arr.splice(index, 1);
+                if (cnt !== 0) cnt--;
+                document.getElementById("count").innerHTML = cnt;
+                render_cart() ;
+            }
+        }
+    })
+}
+
+function render_cart() {
+    if(cart_Arr.length === 0)
+    {
+        cart_content.innerHTML = "CART IS EMPTY";
+    }
+    else{
+        cart_content.innerHTML = "";
+        cart_Arr.forEach(element => {
+            cart_content.innerHTML += `
+                <div class = "product_card">
+                    <img src="${element.image}" alt="${element.name}">
+                    <p>${element.name}</p>
+                    <p>${element.category}</p>
+                    <p>$${element.price.toFixed(2)}</p>
+                    <button class = "cart_btn" data-id="${element.id}">
+                        Remove
+                    </button>
+                </div>
+            `
+        });
+    }
+
+}
+
+remove_from_cart();
