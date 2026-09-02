@@ -46,6 +46,54 @@ const products = [
         category: "Accessories",
         image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500",
         inStock: true
+    },
+    {
+        id: 7,
+        name: "Ergonomic Gaming Mouse",
+        price: 39.99,
+        category: "Electronics",
+        image: "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=500",
+        inStock: true
+    },
+    {
+        id: 8,
+        name: "Smart Watch",
+        price: 199.99,
+        category: "Electronics",
+        image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500",
+        inStock: true
+    },
+    {
+        id: 9,
+        name: "Graphic T-Shirt",
+        price: 24.99,
+        category: "Apparel",
+        image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500",
+        inStock: true
+    },
+    {
+        id: 10,
+        name: "Running Shoes",
+        price: 89.99,
+        category: "Apparel",
+        image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500",
+        inStock: false
+    },
+    {
+        id: 11,
+        name: "Polarized Sunglasses",
+        price: 45.00,
+        category: "Accessories",
+        image: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=500",
+        inStock: true
+    },
+    {
+        id: 12,
+        name: "Minimalist Watch",
+        price: 119.99,
+        category: "Accessories",
+        image: "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=500",
+        inStock: true
     }
 ];
 
@@ -97,7 +145,7 @@ function add_to_cart() {
         if (event.target.classList.contains("add_to_cart_button")) {
             const product_id = Number(event.target.dataset.id);
             const selected_product = products.find(p => p.id === product_id);
-            
+
             if (selected_product) {
                 if (cart_Arr.some(p => p.id === product_id)) {
                     alert("Item Present In Cart");
@@ -139,24 +187,23 @@ function remove_from_cart() {
         if (e.target.classList.contains("cart_btn")) {
             const p_id = Number(e.target.dataset.id);
 
-            let index = cart_Arr.findIndex(p=> p.id === p_id);
+            let index = cart_Arr.findIndex(p => p.id === p_id);
 
             if (index !== -1) {
                 cart_Arr.splice(index, 1);
                 if (cnt !== 0) cnt--;
                 document.getElementById("count").innerHTML = cnt;
-                render_cart() ;
+                render_cart();
             }
         }
     })
 }
 
 function render_cart() {
-    if(cart_Arr.length === 0)
-    {
+    if (cart_Arr.length === 0) {
         cart_content.innerHTML = "CART IS EMPTY";
     }
-    else{
+    else {
         cart_content.innerHTML = "";
         cart_Arr.forEach(element => {
             cart_content.innerHTML += `
@@ -179,21 +226,20 @@ remove_from_cart();
 
 const filter_btn = document.querySelector(".filters nav");
 
-function filter_category(products){
-    filter_btn.addEventListener("click",(event)=>{
+function filter_category(products) {
+    filter_btn.addEventListener("click", (event) => {
         let cat_Arr = [];
         const rawcat = event.target.dataset.category;
 
         if (!rawcat) return;
 
-        const cat = String(event.target.dataset.category);
+        const cat = String(event.target.dataset.category).toLowerCase();
 
-        if(cat === "all"){
+        if (cat === "all") {
             cat_Arr = products;
         }
-        else
-        {
-            cat_Arr = products.filter(item=>item.category === cat);
+        else {
+            cat_Arr = products.filter(item => item.category.toLowerCase() === cat);
         }
 
         add_products(cat_Arr);
