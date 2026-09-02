@@ -176,3 +176,28 @@ function render_cart() {
 }
 
 remove_from_cart();
+
+const filter_btn = document.querySelector(".filters nav");
+
+function filter_category(products){
+    filter_btn.addEventListener("click",(event)=>{
+        let cat_Arr = [];
+        const rawcat = event.target.dataset.category;
+
+        if (!rawcat) return;
+
+        const cat = String(event.target.dataset.category);
+
+        if(cat === "all"){
+            cat_Arr = products;
+        }
+        else
+        {
+            cat_Arr = products.filter(item=>item.category === cat);
+        }
+
+        add_products(cat_Arr);
+    })
+}
+
+filter_category(products);
