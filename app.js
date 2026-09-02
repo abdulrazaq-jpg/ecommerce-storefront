@@ -247,3 +247,13 @@ function filter_category(products) {
 }
 
 filter_category(products);
+
+const search = document.getElementById("searchInput");
+
+search.addEventListener("input",(event)=>{
+    const query = event.target.value.toLowerCase().trim();
+
+    const Search_Arr = products.filter(item=> item.name.toLowerCase().includes(query));
+
+    add_products(Search_Arr);
+})
