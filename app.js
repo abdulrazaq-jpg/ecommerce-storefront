@@ -136,9 +136,21 @@ function open_cartDrawer() {
 open_cartDrawer();
 
 const cart_content = document.getElementById("cart-list");
+const summary = document.querySelector("summary");
 
 let cnt = 0;
 const cart_Arr = [];
+
+function render_summary() {
+    if (cart_Arr.length === 0) {
+        summary.textContent = "Summary: 0 items • Total: $0.00";
+        return;
+    }
+
+    const totalItems = cart_Arr.length;
+    const totalPrice = cart_Arr.reduce((sum, item) => sum + item.price, 0);
+    summary.textContent = `Summary: ${totalItems} item${totalItems > 1 ? "s" : ""} • Total: $${totalPrice.toFixed(2)}`;
+}
 
 function add_to_cart() {
     main.addEventListener("click", (event) => {
@@ -174,6 +186,7 @@ function update_cart(product_id, selected_product) {
     document.getElementById("count").innerHTML = cnt;
 
     cart_Arr.push(selected_product);
+    render_summary();
 
     alert("Added to Cart");
 }
@@ -193,6 +206,7 @@ function remove_from_cart() {
                 cart_Arr.splice(index, 1);
                 if (cnt !== 0) cnt--;
                 document.getElementById("count").innerHTML = cnt;
+                render_summary();
                 render_cart();
             }
         }
@@ -202,24 +216,26 @@ function remove_from_cart() {
 function render_cart() {
     if (cart_Arr.length === 0) {
         cart_content.innerHTML = "CART IS EMPTY";
-    }
-    else {
-        cart_content.innerHTML = "";
-        cart_Arr.forEach(element => {
-            cart_content.innerHTML += `
-                <div class = "product_card">
-                    <img src="${element.image}" alt="${element.name}">
-                    <p>${element.name}</p>
-                    <p>${element.category}</p>
-                    <p>$${element.price.toFixed(2)}</p>
-                    <button class = "cart_btn" data-id="${element.id}">
-                        Remove
-                    </button>
-                </div>
-            `
-        });
+        render_summary();
+        return;
     }
 
+    cart_content.innerHTML = "";
+    cart_Arr.forEach(element => {
+        cart_content.innerHTML += `
+            <div class = "product_card">
+                <img src="${element.image}" alt="${element.name}">
+                <p>${element.name}</p>
+                <p>${element.category}</p>
+                <p>$${element.price.toFixed(2)}</p>
+                <button class = "cart_btn" data-id="${element.id}">
+                    Remove
+                </button>
+            </div>
+        `
+    });
+
+    render_summary();
 }
 
 remove_from_cart();
@@ -247,6 +263,7 @@ function filter_category(products) {
 }
 
 filter_category(products);
+render_summary();
 
 const search = document.getElementById("searchInput");
 
